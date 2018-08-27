@@ -1,0 +1,22 @@
+{
+  "name": "byob",
+  "version": "1.0.0",
+  "description": "",
+  "main": "scraper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Awiedenman/BYOB.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Awiedenman/BYOB/issues"
+  },
+  "homepage": "https://github.com/Awiedenman/BYOB#readme",
+  "dependencies": {
+    "nightmare": "^3.0.1"
+  }
+}

@@ -8,7 +8,6 @@ let endPoints;
 
 nightmare
   .goto('https://www.coloradobrewerylist.com/brewery_city/denver')
-  .wait(3000)
   .evaluate(() => {
     let breweryList = [...document.querySelectorAll('#genesis-content > brewery-list > table > tbody > tr > td > .ng-binding')]
     let breweryLinks = breweryList.map(brewery => {

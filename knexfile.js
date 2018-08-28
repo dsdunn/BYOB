@@ -8,7 +8,10 @@ module.exports = {
     migarations: {
       directory: './db/migrations'
     },
-    useNullAsDefault: true
+    seeds: {
+      directory: './db/seeds/dev'
+    },
+    useNullAsDefault: true,
   },
 
   staging: {

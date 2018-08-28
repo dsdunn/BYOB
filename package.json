@@ -18,5 +18,9 @@
   "homepage": "https://github.com/Awiedenman/BYOB#readme",
   "dependencies": {
     "nightmare": "^3.0.1"
+  },
+  "devDependencies": {
+    "knex": "^0.15.2",
+    "pg": "^7.4.3"
   }
 }

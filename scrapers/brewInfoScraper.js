@@ -38,10 +38,8 @@ asyncForEach(breweryLinks, async (link) => {
     })
     .end()
     .then(result => {
-      console.log(result);
       const output = JSON.stringify(result, null, 2);
-      let name = result.breweryName.replace(/\s/g, '');
-      fs.writeFile(`${name}.js`, output, 'utf8', error => {
+      fs.appendFileSync(`breweryData.js`, output + ',', 'utf8', error => {
         if(error){
           return console.log('Error:', error)
         }

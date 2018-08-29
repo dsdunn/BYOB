@@ -26,6 +26,14 @@ app.get('/api/v1/beers', (request, response) => {
   .then((beers) => response.status(200).json(beers))
 })
 
+app.get('/api/v1/beers/:beerName', (request, response) => {
+  const { beerName }  = request.params;
+  console.log(beerName);
+  database('beers').where({beer_name: beerName})
+  .then(beer => response.status(200).json(beer))
+  // response.send(beerName)
+})
+
 app.post('/api/v1/beers', (request, response) => {
   const beer = request.body;
   const brewery_id = database('breweries').where({brewery_name: beer.brewery_name}).select('id')
@@ -44,7 +52,7 @@ app.post('/api/v1/beers', (request, response) => {
 })
 
 app.listen(app.get('port'), () => {
-  console.log(`${app.locals.title}is running on ${app.get('port')}`);
+  console.log(`${app.locals.title} is running on ${app.get('port')}`);
 })
 
 module.exports = app;

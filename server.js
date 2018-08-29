@@ -26,6 +26,23 @@ app.get('/api/v1/beers', (request, response) => {
   .then((beers) => response.status(200).json(beers))
 })
 
+app.post('/api/v1/beers', (request, response) => {
+  const beer = request.body;
+  const brewery_id = database('breweries').where({brewery_name: beer.brewery_name}).select('id')
+  database('beers')
+  .returning('id')
+  .insert({
+     beer_name: beer.beer_name, 
+     style: beer.style, 
+     abv: beer.abv, 
+     tasted: beer.tasted, 
+     rating: beer.rating, 
+     availability: beer.availability, 
+     brewery_id 
+    })
+  .then((id) => response.status(201).json(id))
+})
+
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title}is running on ${app.get('port')}`);
 })

@@ -43,7 +43,7 @@ app.post('/api/v1/beers', (request, response) => {
   const brewery_id = database('breweries').where({brewery_name: beer.brewery_name}).select('id')
   
   for (let requiredParams of ['brewery_name', 'beer_name']) {
-    if (!beer.requiredParams) {
+    if (!beer[requiredParams]) {
       return response.status(422).send(`Missing required beer information: ${requiredParams}`)
     }
   }
@@ -64,7 +64,7 @@ app.post('/api/v1/beers', (request, response) => {
 app.post('/api/v1/breweries', (request, response) => {
   const brewery = request.body;
   for (let requiredParams of ['brewery_name', 'address', 'visited', 'rating']) {
-    if (!brewery.requiredParams) {
+    if (!brewery[requiredParams]) {
       return response.status(422).send(`Missing required brewery information: ${requiredParams}`)
     }
   }
@@ -72,6 +72,19 @@ app.post('/api/v1/breweries', (request, response) => {
   .returning('brewery_name')
   .insert(brewery)
   .then(brewery => response.status(201).json(`New brewery ${brewery} has been added to the database.`))
+})
+
+app.put('/api/v1/beers', (request, response) => {
+  const rating = request.body;
+  console.log(rating);
+  for (let requiredParams of ['beer_name', 'rating']) {
+    if (!rating[requiredParams]) {
+      return response.send(`You are missing required params of ${requiredParams}`)
+    }
+  }
+  database('beers').where({ beer_name: rating.beer_name })
+  .update({ rating: rating.rating })
+  .then(result => response.status(201).send(`You have set the rating of ${rating.beer_name} to ${rating.rating}`))
 })
 
 app.listen(app.get('port'), () => {

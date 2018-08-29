@@ -28,10 +28,14 @@ app.get('/api/v1/beers', (request, response) => {
 
 app.get('/api/v1/beers/:beerName', (request, response) => {
   const { beerName }  = request.params;
-  console.log(beerName);
   database('beers').where({beer_name: beerName})
   .then(beer => response.status(200).json(beer))
-  // response.send(beerName)
+})
+
+app.get('/api/v1/breweries/:breweryName', (request, response) => {
+  const { breweryName } = request.params;
+  database('breweries').where({brewery_name: breweryName})
+  .then( brewery => response.status(200).json(brewery))
 })
 
 app.post('/api/v1/beers', (request, response) => {

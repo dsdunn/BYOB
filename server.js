@@ -55,6 +55,19 @@ app.post('/api/v1/beers', (request, response) => {
   .then((id) => response.status(201).json(id))
 })
 
+app.post('/api/v1/breweries', (request, response) => {
+  const brewery = request.body;
+  for (let requiredParams of ['brewery_name', 'address', 'visited', 'rating']) {
+    if (!brewery.requiredParams) {
+      return response.status(422).send(`Missing required brewery information: ${requiredParams}`)
+    }
+  }
+  database('breweries')
+  .returning('brewery_name')
+  .insert(brewery)
+  .then(brewery => response.status(201).json(`New brewery ${brewery} has been added to the database.`))
+})
+
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}`);
 })

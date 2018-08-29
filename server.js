@@ -37,20 +37,34 @@ app.get('/api/v1/beers', (request, response) => {
       return response.status(404).send('No beers found.')
     }
   })
-  .catch(() => response.status(500).send('Sorry, trouble on our end handling your Beer request.'))
+  .catch((error) => response.status(500).send('Sorry, trouble on our end handling your Beer request.' + error.message))
 })
 
 
 app.get('/api/v1/beers/:beerName', (request, response) => {
   const { beerName }  = request.params;
   database('beers').where({beer_name: beerName})
-  .then(beer => response.status(200).json(beer))
+  .then(beer => {
+    if (beer) {
+      return response.status(200).json(beer)
+    } else {
+      return response.status(404).send('Beer not found')
+    }
+  })
+  .catch((error)=> response.status(500).send('Sorry, trouble on our end handling your Beer request.' + error.messege))
 })
 
 app.get('/api/v1/breweries/:breweryName', (request, response) => {
   const { breweryName } = request.params;
   database('breweries').where({brewery_name: breweryName})
-  .then( brewery => response.status(200).json(brewery))
+  .then( brewery => {
+    if (brewery) {
+      return response.status(200).json(brewery)
+    } else {
+      return response.status(404).send('Brewery not found.')
+    }
+  })
+  .catch((error) => response.status(500).send('Sorry, trouble on our end handling your request.' + error.message))
 })
 
 app.post('/api/v1/beers', (request, response) => {

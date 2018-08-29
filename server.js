@@ -41,6 +41,12 @@ app.get('/api/v1/breweries/:breweryName', (request, response) => {
 app.post('/api/v1/beers', (request, response) => {
   const beer = request.body;
   const brewery_id = database('breweries').where({brewery_name: beer.brewery_name}).select('id')
+  
+  for (let requiredParams of ['brewery_name', 'beer_name']) {
+    if (!beer.requiredParams) {
+      return response.status(422).send(`Missing required beer information: ${requiredParams}`)
+    }
+  }
   database('beers')
   .returning('id')
   .insert({

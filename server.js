@@ -21,6 +21,11 @@ app.get('/api/v1/breweries', (request, response) => {
   .then((breweries) => response.status(200).json(breweries))
 })
 
+app.get('/api/v1/beers', (request, response) => {
+  database('beers').select()
+  .then((beers) => response.status(200).json(beers))
+})
+
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title}is running on ${app.get('port')}`);
 })

@@ -87,6 +87,18 @@ app.put('/api/v1/beers', (request, response) => {
   .then(result => response.status(201).send(`You have set the rating of ${rating.beer_name} to ${rating.rating}`))
 })
 
+app.put('/api/v1/breweries', (request, response) => {
+  const visited = request.body;
+  for (let requiredParams of ['brewery_name', 'visited']) {
+    if (!visited[requiredParams]) {
+      return response.send(`You are missing required params of ${requiredParams}`)
+    }
+  }
+  database('breweries').where({ brewery_name: visited.brewery_name })
+  .update({ visited: visited.visited })
+  .then(result => response.status(201).send(`You have set the visited property of ${visited.brewery_name} to ${visited.visited}`))
+})
+
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}`);
 })

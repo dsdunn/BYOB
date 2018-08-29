@@ -43,9 +43,10 @@ app.get('/api/v1/beers', (request, response) => {
 
 app.get('/api/v1/beers/:beerName', (request, response) => {
   const { beerName }  = request.params;
+  
   database('beers').where({beer_name: beerName})
   .then(beer => {
-    if (beer) {
+    if (beer.length) {
       return response.status(200).json(beer)
     } else {
       return response.status(404).send('Beer not found')
@@ -56,9 +57,10 @@ app.get('/api/v1/beers/:beerName', (request, response) => {
 
 app.get('/api/v1/breweries/:breweryName', (request, response) => {
   const { breweryName } = request.params;
+
   database('breweries').where({brewery_name: breweryName})
   .then( brewery => {
-    if (brewery) {
+    if (brewery.length) {
       return response.status(200).json(brewery)
     } else {
       return response.status(404).send('Brewery not found.')
@@ -92,6 +94,7 @@ app.post('/api/v1/beers', (request, response) => {
 
 app.post('/api/v1/breweries', (request, response) => {
   const brewery = request.body;
+
   for (let requiredParams of ['brewery_name', 'address', 'visited', 'rating']) {
     if (!brewery[requiredParams]) {
       return response.status(422).send(`Missing required brewery information: ${requiredParams}`)
@@ -105,7 +108,7 @@ app.post('/api/v1/breweries', (request, response) => {
 
 app.put('/api/v1/beers', (request, response) => {
   const rating = request.body;
-  console.log(rating);
+
   for (let requiredParams of ['beer_name', 'rating']) {
     if (!rating[requiredParams]) {
       return response.status(422).send(`You are missing required params of ${requiredParams}`)
@@ -118,6 +121,7 @@ app.put('/api/v1/beers', (request, response) => {
 
 app.put('/api/v1/breweries', (request, response) => {
   const visited = request.body;
+
   for (let requiredParams of ['brewery_name', 'visited']) {
     if (!visited[requiredParams]) {
       return response.status(422).send(`You are missing required params of ${requiredParams}`)
@@ -130,12 +134,18 @@ app.put('/api/v1/breweries', (request, response) => {
 
 app.delete('/api/v1/breweries/:breweryName', (request, response) => {
   const breweryName = request.params.breweryName;
-  console.log(breweryName);
-
   const breweryId = database('breweries').where({brewery_name: breweryName}).select('id')
+
   database('beers').where({ brewery_id: breweryId }).del()
   .then(() => database('breweries').where('brewery_name', breweryName).del())
-  .then(() => response.status(200).send(`You have sucessfully deleted ${breweryName} from the brewery database.`))
+  .then(() => response.status(200).send(`You have successfully deleted ${breweryName} from the brewery database.`))
+})
+
+app.delete('/api/v1/beers/:beerName', (request, response) => {
+  const beerName = request.params.beerName;
+
+  database('beers').where({beer_name: beerName}).del()
+  .then(() => response.status(200).send(`You have successfully deleted ${beerName} from the beer database.`))
 })
 
 app.listen(app.get('port'), () => {

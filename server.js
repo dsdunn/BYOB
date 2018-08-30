@@ -69,6 +69,13 @@ app.get('/api/v1/breweries/:breweryName', (request, response) => {
   .catch((error) => response.status(500).send('Sorry, trouble on our end handling your request.' + error.message))
 })
 
+app.get('/api/v1/rating', (request, response) => {
+  const minRating = request.query.rating;
+  database('beers').whereBetween('rating',[minRating, 6])
+  .then((result) => response.json(result)
+    )
+})
+
 app.post('/api/v1/beers', (request, response) => {
   const beer = request.body;
   const brewery_id = database('breweries').where({brewery_name: beer.brewery_name}).select('id')
@@ -106,7 +113,8 @@ app.post('/api/v1/breweries', (request, response) => {
   .then(brewery => response.status(201).json(`New brewery ${brewery} has been added to the database.`))
 })
 
-app.put('/api/v1/beers', (request, response) => {
+app.patch('/api/v1/beers/:id', (request, response) => {
+  // const id = request.params;
   const rating = request.body;
 
   for (let requiredParams of ['beer_name', 'rating']) {
@@ -114,12 +122,13 @@ app.put('/api/v1/beers', (request, response) => {
       return response.status(422).send(`You are missing required params of ${requiredParams}`)
     }
   }
+  //handle if id doesn't exist
   database('beers').where({ beer_name: rating.beer_name })
   .update({ rating: rating.rating })
   .then(result => response.status(200).send(`You have set the rating of ${rating.beer_name} to ${rating.rating}`))
 })
 
-app.put('/api/v1/breweries', (request, response) => {
+app.patch('/api/v1/breweries', (request, response) => {
   const visited = request.body;
 
   for (let requiredParams of ['brewery_name', 'visited']) {
@@ -147,6 +156,7 @@ app.delete('/api/v1/beers/:beerName', (request, response) => {
   database('beers').where({beer_name: beerName}).del()
   .then(() => response.status(200).send(`You have successfully deleted ${beerName} from the beer database.`))
 })
+
 
 app.listen(app.get('port'), () => {
   console.log(`${app.locals.title} is running on ${app.get('port')}`);

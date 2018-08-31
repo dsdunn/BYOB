@@ -4,12 +4,27 @@ const app = express();
 const environment = process.env.NODE_ENV || 'development';
 const configuration = require('./knexfile')[environment];
 const database = require('knex')(configuration);
+const jwt = require('jsonwebtoken');
 
 app.set('port', process.env.PORT || 3000);
+app.set('secretKey', 'brewmaster');
+
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true }));
 app.locals.title = 'BYOB';
+
+const checkAuth = (request, response, next) => {
+  const { token } = request.headers;
+  const decoded = jwt.verify(token, app.get('secretKey'))
+
+  if( decoded.info ) {
+    next()
+  } else {
+    return response.status(401).send("need admin privileges")
+  }
+}
+
 
 
 app.get('/', (request, response) => {
@@ -111,6 +126,29 @@ app.post('/api/v1/breweries', (request, response) => {
   .returning('brewery_name')
   .insert(brewery)
   .then(brewery => response.status(201).json(`New brewery ${brewery} has been added to the database.`))
+})
+
+app.post('/api/v1/jwt', (request, response) => {
+  const info = request.body;
+  const splitEmail = info.email.split('@')
+  const domain = splitEmail[splitEmail.length - 1]
+
+
+  for(let requiredParams of ['email', 'name']) {
+    if(!info[requiredParams] ){
+      return response.status(422).send(`missing params: ${requiredParams}`)
+    }
+  } 
+  if(domain != 'turing.io') {
+    return response.status(401).send('unauthorized');
+  }
+
+  const token = jwt.sign({
+    info
+  }, app.get('secretKey'), { expiresIn: '48h' })
+
+  return response.status(201).json({token: token})
+
 })
 
 app.patch('/api/v1/beers/:id', (request, response) => {

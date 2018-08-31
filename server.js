@@ -25,7 +25,26 @@ const checkAuth = (request, response, next) => {
   }
 }
 
+app.post('/api/v1/jwt', (request, response) => {
+  const info = request.body;
+  const splitEmail = info.email.split('@')
+  const domain = splitEmail[splitEmail.length - 1]
 
+
+  for(let requiredParams of ['email', 'name']) {
+    if(!info[requiredParams] ){
+      return response.status(422).send(`missing params: ${requiredParams}`)
+    }
+  } 
+  if(domain != 'turing.io') {
+    return response.status(401).send('unauthorized');
+  }
+
+  const token = jwt.sign({
+    info
+  }, app.get('secretKey'), { expiresIn: '48h' })
+    return response.status(201).json({token: token})
+})
 
 app.get('/', (request, response) => {
   response.send('So many beers, so little time.')
@@ -91,7 +110,7 @@ app.get('/api/v1/rating', (request, response) => {
     )
 })
 
-app.post('/api/v1/beers', (request, response) => {
+app.post('/api/v1/beers', checkAuth, (request, response) => {
   const beer = request.body;
   const brewery_id = database('breweries').where({brewery_name: beer.brewery_name}).select('id')
   
@@ -114,7 +133,7 @@ app.post('/api/v1/beers', (request, response) => {
   .then((id) => response.status(201).json(id))
 })
 
-app.post('/api/v1/breweries', (request, response) => {
+app.post('/api/v1/breweries', checkAuth, (request, response) => {
   const brewery = request.body;
 
   for (let requiredParams of ['brewery_name', 'address', 'visited', 'rating']) {
@@ -128,30 +147,8 @@ app.post('/api/v1/breweries', (request, response) => {
   .then(brewery => response.status(201).json(`New brewery ${brewery} has been added to the database.`))
 })
 
-app.post('/api/v1/jwt', (request, response) => {
-  const info = request.body;
-  const splitEmail = info.email.split('@')
-  const domain = splitEmail[splitEmail.length - 1]
 
-
-  for(let requiredParams of ['email', 'name']) {
-    if(!info[requiredParams] ){
-      return response.status(422).send(`missing params: ${requiredParams}`)
-    }
-  } 
-  if(domain != 'turing.io') {
-    return response.status(401).send('unauthorized');
-  }
-
-  const token = jwt.sign({
-    info
-  }, app.get('secretKey'), { expiresIn: '48h' })
-
-  return response.status(201).json({token: token})
-
-})
-
-app.patch('/api/v1/beers/:id', (request, response) => {
+app.patch('/api/v1/beers/:id', checkAuth, (request, response) => {
   // const id = request.params;
   const rating = request.body;
 
@@ -166,7 +163,7 @@ app.patch('/api/v1/beers/:id', (request, response) => {
   .then(result => response.status(200).send(`You have set the rating of ${rating.beer_name} to ${rating.rating}`))
 })
 
-app.patch('/api/v1/breweries', (request, response) => {
+app.patch('/api/v1/breweries', checkAuth, (request, response) => {
   const visited = request.body;
 
   for (let requiredParams of ['brewery_name', 'visited']) {
@@ -179,7 +176,7 @@ app.patch('/api/v1/breweries', (request, response) => {
   .then(result => response.status(200).send(`You have set the visited property of ${visited.brewery_name} to ${visited.visited}`))
 })
 
-app.delete('/api/v1/breweries/:breweryName', (request, response) => {
+app.delete('/api/v1/breweries/:breweryName', checkAuth, (request, response) => {
   const breweryName = request.params.breweryName;
   const breweryId = database('breweries').where({brewery_name: breweryName}).select('id')
 
@@ -188,7 +185,7 @@ app.delete('/api/v1/breweries/:breweryName', (request, response) => {
   .then(() => response.status(200).send(`You have successfully deleted ${breweryName} from the brewery database.`))
 })
 
-app.delete('/api/v1/beers/:beerName', (request, response) => {
+app.delete('/api/v1/beers/:beerName', checkAuth, (request, response) => {
   const beerName = request.params.beerName;
 
   database('beers').where({beer_name: beerName}).del()

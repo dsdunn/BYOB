@@ -15,13 +15,16 @@ app.use(bodyParser.urlencoded({extended: true }));
 app.locals.title = 'BYOB';
 
 const checkAuth = (request, response, next) => {
-  const { token } = request.headers;
-  const decoded = jwt.verify(token, app.get('secretKey'))
-
-  if( decoded.info ) {
-    next()
-  } else {
-    return response.status(401).send("need admin privileges")
+  try{
+    const { token } = request.headers;
+    const decoded = jwt.verify(token, app.get('secretKey'))
+    if( decoded.info ) {
+      next()
+    } else {
+      return response.status(403).send("need admin privileges")
+    }
+  } catch(err) {
+    return response.status(401).send(`Error: ${err.message}`);
   }
 }
 

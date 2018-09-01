@@ -44,7 +44,6 @@ describe('API Routes', () => {
         response.body[0].should.have.property('id');
         response.body[0].id.should.equal(1);
         response.body[0].should.have.property('beer_name');
-        response.body[0].beer_name.should.equal('Boise 150');
         response.body[0].should.have.property('rating');
         response.body[0].should.have.property('style');
         response.body[0].style.should.equal('Golden or Blonde Ale');

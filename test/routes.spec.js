@@ -109,8 +109,27 @@ describe('API Routes', () => {
         done();
       })
     })
+  })
+
+  describe('POST /api/v1/beers', () => {
+    it('should post a new beer to the beers db', (done) => {
+      chai.request(server)
+      .post('/api/v1/beers')
+      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmZvIjp7ImVtYWlsIjoic3Vja2FAdHVyaW5nLmlvIiwibmFtZSI6InN1cGVyRHVwZXIifSwiaWF0IjoxNTM1ODM0MDIwLCJleHAiOjE1MzYwMDY4MjB9.lSaLvew7qOJYG7qwUQSBakfg_GH-keIRUdi1ay_2JLE')
+      .send({
+        beer_name: 'Boise 150',
+        brewery_name: '10 Barrel Brewing Company'
+      })
+      .end((error, response) => {
+        response.should.be.json;
+        response.should.have.status(201);
+        response.body.should.be.a('array');
+        done();
+      })
+    })
     
   })
+  
   
   
   

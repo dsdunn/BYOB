@@ -42,15 +42,11 @@ describe('API Routes', () => {
         response.body.should.be.a('array');
         response.should.be.json;
         response.body[0].should.have.property('id');
-        response.body[0].id.should.equal(1);
         response.body[0].should.have.property('beer_name');
         response.body[0].should.have.property('rating');
         response.body[0].should.have.property('style');
-        response.body[0].style.should.equal('Golden or Blonde Ale');
         response.body[0].should.have.property('brewery_id');
-        response.body[0].brewery_id.should.equal(1);
         response.body[0].should.have.property('abv');
-        response.body[0].abv.should.equal(4.7);
         done();
       })
     })

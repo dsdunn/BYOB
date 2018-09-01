@@ -77,7 +77,6 @@ app.get('/api/v1/beers', (request, response) => {
   .catch((error) => response.status(500).send('Sorry, trouble on our end handling your Beer request.' + error.message))
 })
 
-
 app.get('/api/v1/beers/:beerName', (request, response) => {
   const { beerName }  = request.params;
   

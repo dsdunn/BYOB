@@ -78,7 +78,7 @@ describe('API Routes', () => {
     })
   })
 
-  describe('GET /api/breweries/:breweryName', (done) => {
+  describe('GET /api/breweries/:breweryName', () => {
     it('should return a single brewery based on breweryName param', (done) => {
       chai.request(server)
       .get('/api/v1/breweries/Chain Reaction Brewing')
@@ -128,10 +128,51 @@ describe('API Routes', () => {
       })
     })
     
+    it('should get a error if required params are missing', (done) => {
+      chai.request(server)
+      .post('/api/v1/beers')
+      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmZvIjp7ImVtYWlsIjoic3Vja2FAdHVyaW5nLmlvIiwibmFtZSI6InN1cGVyRHVwZXIifSwiaWF0IjoxNTM1ODM0MDIwLCJleHAiOjE1MzYwMDY4MjB9.lSaLvew7qOJYG7qwUQSBakfg_GH-keIRUdi1ay_2JLE')
+      .send({
+        beer_name: 'Boise 150'
+      })
+      .end((error, response) => {
+        response.should.have.a.status(422);
+        response.text.should.be.a('string');
+        done();
+      })
+    })
   })
-  
-  
-  
-  
 
+  describe('POST /api/v1/breweries', () => {
+    it('should add a new brewery to the breweries list', (done) => {
+      chai.request(server)
+      .post('/api/v1/breweries')
+      .set({'Content-Type': 'application/json', 'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmZvIjp7ImVtYWlsIjoic3Vja2FAdHVyaW5nLmlvIiwibmFtZSI6InN1cGVyRHVwZXIifSwiaWF0IjoxNTM1ODM0MDIwLCJleHAiOjE1MzYwMDY4MjB9.lSaLvew7qOJYG7qwUQSBakfg_GH-keIRUdi1ay_2JLE'})
+      .send({
+            brewery_name: 'garbage',
+            address: 'denver, CO',
+            visited: 'true',
+            rating: '3'
+      })
+      .end((error, response) => {
+        response.should.have.a.status(201);
+        response.body.should.be.a('string');
+        done();
+      })
+    })
+
+    it('should get a error if required params are missing', (done) => {
+      chai.request(server)
+      .post('/api/v1/breweries')
+      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmZvIjp7ImVtYWlsIjoic3Vja2FAdHVyaW5nLmlvIiwibmFtZSI6InN1cGVyRHVwZXIifSwiaWF0IjoxNTM1ODM0MDIwLCJleHAiOjE1MzYwMDY4MjB9.lSaLvew7qOJYG7qwUQSBakfg_GH-keIRUdi1ay_2JLE')
+      .send({
+        beer_name: 'Boise 150'
+      })
+      .end((error, response) => {
+        response.should.have.a.status(422);
+        response.text.should.be.a('string');
+        done();
+      })
+    })
+  })
 })

@@ -5,7 +5,7 @@ module.exports = {
   development: {
     client: 'pg',
     connection: 'postgres://localhost/byob',
-    migarations: {
+    migrations: {
       directory: './db/migrations'
     },
     seeds: {
@@ -17,7 +17,7 @@ module.exports = {
   test: {
     client: 'pg',
     connection: 'postgres://localhost/test_byob',
-    migarations: {
+    migrations: {
       directory: './db/migrations'
     },
     seeds: {

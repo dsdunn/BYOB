@@ -175,4 +175,94 @@ describe('API Routes', () => {
       })
     })
   })
+
+  describe('PATCH /api/v1/beers', () => {
+    it('should update the rating of a beer', (done) => {
+      chai.request(server)
+      .patch('/api/v1/beers')
+      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmZvIjp7ImVtYWlsIjoic3Vja2FAdHVyaW5nLmlvIiwibmFtZSI6InN1cGVyRHVwZXIifSwiaWF0IjoxNTM1ODM0MDIwLCJleHAiOjE1MzYwMDY4MjB9.lSaLvew7qOJYG7qwUQSBakfg_GH-keIRUdi1ay_2JLE')
+      .send({
+        'beer_name': 'Boise 150',
+        'rating': 4
+      })
+      .end((error, response) => {
+        console.log(response.text)
+        response.should.have.a.status(200);
+        response.text.should.be.a('string');
+        done();
+      })
+    })
+
+    it('should return an error if params are missing', (done) => {
+      chai.request(server)
+      .patch('/api/v1/beers')
+      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmZvIjp7ImVtYWlsIjoic3Vja2FAdHVyaW5nLmlvIiwibmFtZSI6InN1cGVyRHVwZXIifSwiaWF0IjoxNTM1ODM0MDIwLCJleHAiOjE1MzYwMDY4MjB9.lSaLvew7qOJYG7qwUQSBakfg_GH-keIRUdi1ay_2JLE')
+      .send({
+        'beer_name': 'gross Beer'
+      })
+      .end((error, response) => {
+        response.should.have.a.status(422);
+        done();
+      })
+    })
+  })
+
+  describe('PATCH /api/v1/breweries', () => {
+    it('should update brewery visited status to true', (done) => {
+      chai.request(server)
+      .patch('/api/v1/breweries')
+      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmZvIjp7ImVtYWlsIjoic3Vja2FAdHVyaW5nLmlvIiwibmFtZSI6InN1cGVyRHVwZXIifSwiaWF0IjoxNTM1ODM0MDIwLCJleHAiOjE1MzYwMDY4MjB9.lSaLvew7qOJYG7qwUQSBakfg_GH-keIRUdi1ay_2JLE')
+      .send({
+        'brewery_name': 'Spangalang',
+        'visited': true
+      })
+      .end((error, response) => {
+        console.log(response.text)
+        response.should.have.a.status(200);
+        response.text.should.be.a('string');
+        done();
+      })
+    })
+
+    it('should return an error if params are missing', (done) => {
+      chai.request(server)
+      .patch('/api/v1/breweries')
+      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmZvIjp7ImVtYWlsIjoic3Vja2FAdHVyaW5nLmlvIiwibmFtZSI6InN1cGVyRHVwZXIifSwiaWF0IjoxNTM1ODM0MDIwLCJleHAiOjE1MzYwMDY4MjB9.lSaLvew7qOJYG7qwUQSBakfg_GH-keIRUdi1ay_2JLE')
+      .send({
+        'address': 'nowhere'
+      })
+      .end((error, response) => {
+        response.should.have.a.status(422);
+        done();
+      })
+    })
+  })
+  
+  describe('DELETE /api/v1/breweries/:breweryName', () => {
+    it('should delete a beer based on the brewery_name', (done) => {
+      chai.request(server)
+      .delete('/api/v1/breweries/Baere Brewing Company')
+      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmZvIjp7ImVtYWlsIjoic3Vja2FAdHVyaW5nLmlvIiwibmFtZSI6InN1cGVyRHVwZXIifSwiaWF0IjoxNTM1ODM0MDIwLCJleHAiOjE1MzYwMDY4MjB9.lSaLvew7qOJYG7qwUQSBakfg_GH-keIRUdi1ay_2JLE')
+      .end((error, response) => { 
+        response.should.have.a.status(200); 
+        response.text.should.be.a('string');
+        done();
+      })
+    })
+  })
+
+  describe('DELETE /api/v1/beers/:beerName', () => {
+    it('should delete a beer based on the beer_name', (done) => {
+      chai.request(server)
+      .delete('/api/v1/beers/Boise 150')
+      .set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpbmZvIjp7ImVtYWlsIjoic3Vja2FAdHVyaW5nLmlvIiwibmFtZSI6InN1cGVyRHVwZXIifSwiaWF0IjoxNTM1ODM0MDIwLCJleHAiOjE1MzYwMDY4MjB9.lSaLvew7qOJYG7qwUQSBakfg_GH-keIRUdi1ay_2JLE')
+      .end((error, response) => {
+        response.should.have.a.status(200);
+        response.text.should.be.a('string');
+        done();
+      })
+    })
+  })
+
+  
 })

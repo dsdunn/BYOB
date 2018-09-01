@@ -40,7 +40,7 @@ app.post('/api/v1/jwt', (request, response) => {
     }
   } 
   if(domain != 'turing.io') {
-    return response.status(401).send('unauthorized');
+    return response.status(401).json('unauthorized');
   }
 
   const token = jwt.sign({

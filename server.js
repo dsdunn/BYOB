@@ -24,7 +24,7 @@ const checkAuth = (request, response, next) => {
       return response.status(403).send("need admin privileges")
     }
   } catch(err) {
-    return response.status(401).send(`Error: ${err.message}`);
+    return response.status(401).send(`Error7777: ${err.message}`);
   }
 }
 
@@ -150,8 +150,7 @@ app.post('/api/v1/breweries', checkAuth, (request, response) => {
 })
 
 
-app.patch('/api/v1/beers/:id', checkAuth, (request, response) => {
-  // const id = request.params;
+app.patch('/api/v1/beers/', checkAuth, (request, response) => {
   const rating = request.body;
 
   for (let requiredParams of ['beer_name', 'rating']) {
@@ -159,10 +158,10 @@ app.patch('/api/v1/beers/:id', checkAuth, (request, response) => {
       return response.status(422).send(`You are missing required params of ${requiredParams}`)
     }
   }
-  //handle if id doesn't exist
   database('beers').where({ beer_name: rating.beer_name })
   .update({ rating: rating.rating })
   .then(result => response.status(200).send(`You have set the rating of ${rating.beer_name} to ${rating.rating}`))
+  .catch(err => response.status(404).send(`Error: ${err}`))
 })
 
 app.patch('/api/v1/breweries', checkAuth, (request, response) => {

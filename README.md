@@ -66,6 +66,303 @@ Used to collect a Token for a User.
 ```string
 "Missing params: [param]"
 ```
+GET- BREWERIES
+
+## Login
+
+**URL** : `/api/v1/breweries`
+
+**Method** : `GET`
+
+**Auth required** : NO
+
+**Data constraints**
+
+No Data constraints.  No Auth required.
+
+### Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+    [
+    {
+        "id": 1,
+        "brewery_name": "Alternation Brewing Company",
+        "address": "1539 S Broadway\t\nDenver, CO\t80210\t",
+        "visited": false,
+        "rating": null,
+        "created_at": "2018-09-02T15:57:32.646Z",
+        "updated_at": "2018-09-02T15:57:32.646Z"
+    },
+    {
+        "id": 3,
+        "brewery_name": "Alpine Dog Brewing Company",
+        "address": "1505 Ogden St.\t\nDenver, CO\t80218\t",
+        "visited": false,
+        "rating": null,
+        "created_at": "2018-09-02T15:57:32.648Z",
+        "updated_at": "2018-09-02T15:57:32.648Z"
+    }
+]
+```
+
+### Error Response
+
+**Condition** : No breweries found.
+
+**Code** : `404 Not Found`
+
+**Content** :
+
+```string
+“No breweries found”
+```
+**Condition** : Unable to process user’s request.
+
+**Code** : `500 Internal Server Error`
+
+**Content** :
+
+string
+“Sorry, trouble on our end handling your brewery request”.
+
+GET- BEERS
+
+## Login
+
+**URL** : `/api/v1/beers`
+
+**Method** : `GET`
+
+**Auth required** : NO
+
+**Data constraints**
+
+No Data constraints.  No Auth required.
+
+### Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+    [{
+        "id": 2,
+        "brewery_id": 4,
+        "beer_name": "Blackberry Table Sour",
+        "style": "Berliner Weissbier",
+        "abv": null,
+        "tasted": false,
+        "rating": null,
+        "availability": "Rotating",
+        "created_at": "2018-09-02T15:57:32.780Z",
+        "updated_at": "2018-09-02T15:57:32.780Z"
+    },
+    {
+        "id": 3,
+        "brewery_id": 4,
+        "beer_name": "Baere: Stout",
+        "style": "American Stout",
+        "abv": 6.5,
+        "tasted": false,
+        "rating": null,
+        "availability": "Rotating",
+        "created_at": "2018-09-02T15:57:32.784Z",
+        "updated_at": "2018-09-02T15:57:32.784Z"
+    }]
+```
+
+### Error Response
+
+**Condition** : No beers found.
+
+**Code** : `404 Not Found`
+
+**Content** :
+
+```string
+“No breweries found”
+```
+**Condition** : Unable to process user’s request.
+
+**Code** : `500 Internal Server Error`
+
+**Content** :
+
+string
+“Sorry, trouble on our end handling your Beer request” + “error.message”
+
+
+GET- BEER by beerName
+
+## Login
+
+**URL** : `/api/v1/beers/:beerName`
+
+**Method** : `GET`
+
+**Auth required** : NO
+
+**Data constraints**
+
+No Data constraints.  No Auth required.
+
+### Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json:
+endpoint: “/api/v1/beers/Boise 150”
+    [{
+        "id": 105,
+        "brewery_id": 2,
+        "beer_name": "Boise 150",
+        "style": "Golden or Blonde Ale",
+        "abv": 4.7,
+        "tasted": false,
+        "rating": null,
+        "availability": "Rotating",
+        "created_at": "2018-09-02T15:57:32.871Z",
+        "updated_at": "2018-09-02T15:57:32.871Z"
+    }
+]
+```
+
+### Error Response
+
+**Condition** : Beer not found
+
+**Code** : `404 Not Found`
+
+**Content** :
+
+```string
+“No breweries found”
+```
+**Condition** : Unable to process user’s request.
+
+**Code** : `500 Internal Server Error`
+
+**Content** :
+
+string
+“Sorry, trouble on our end handling your beer request” + “error.message”.
+
+
+GET- BREWERIES by breweryName
+
+## Login
+
+**URL** : `/api/v1/beers/:breweryName`
+
+**Method** : `GET`
+
+**Auth required** : NO
+
+**Data constraints**
+
+No Data constraints.  No Auth required.
+
+### Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json:
+endpoint: “/api/v1/beers/Boise 150”
+    [{
+        "id": 21,
+        "brewery_name": "Chain Reaction Brewing",
+        "address": "902 S Lipan St.\t\nDenver, CO\t80223\t",
+        "visited": false,
+        "rating": null,
+        "created_at": "2018-09-02T15:57:32.669Z",
+        "updated_at": "2018-09-02T15:57:32.669Z"
+    }]
+ ```
+
+### Error Response
+
+**Condition** : Brewery not found
+
+**Code** : `404 Not Found`
+
+**Content** :
+
+```string
+“No breweries found”
+```
+**Condition** : Unable to process user’s request.
+
+**Code** : `500 Internal Server Error`
+
+**Content** :
+
+```string
+“Sorry, trouble on our end handling your request” + “error.message”.
+```
+
+GET- BEERS with a rating higher than a given user input
+
+## Login
+
+**URL** : `/api/v1/rating?rating=“*input rating number*”`
+
+**Method** : `GET`
+
+**Auth required** : NO
+
+**Data constraints**
+
+No Data constraints.  No Auth required.
+
+### Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json:
+endpoint: “/api/v1/rating?=3”
+   [{
+        "id": 2,
+        "brewery_id": 4,
+        "beer_name": "Blackberry Table Sour",
+        "style": "Berliner Weissbier",
+        "abv": null,
+        "tasted": false,
+        "rating": 4,
+        "availability": "Rotating",
+        "created_at": "2018-09-02T15:57:32.780Z",
+        "updated_at": "2018-09-02T15:57:32.780Z"
+    },
+    {
+        "id": 3,
+        "brewery_id": 4,
+        "beer_name": "Baere: Stout",
+        "style": "American Stout",
+        "abv": 6.5,
+        "tasted": false,
+        "rating": 5,
+        "availability": "Rotating",
+        "created_at": "2018-09-02T15:57:32.784Z",
+        "updated_at": "2018-09-02T15:57:32.784Z"
+    }]
+```
+
+
+
+
+
+
+
 
 ## Add a Beer to the Database
 
@@ -152,7 +449,8 @@ Used to collect a Token for a User.
     "address": "123 MyStreet, Denver 80223",
     "visited": "true",
     "rating": "5"
-}```
+}
+```
 
 ### Success Response
 
@@ -200,7 +498,8 @@ Used to collect a Token for a User.
 {
     "beer_name": "Leta's Stout",
     "rating": "5"
-}```
+}
+```
 
 ### Success Response
 
@@ -247,7 +546,8 @@ Used to collect a Token for a User.
 {
     "brewery_name": "Mile High Brewery",
     "visited": "true"
-}```
+}
+```
 
 ### Success Response
 

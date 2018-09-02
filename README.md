@@ -24,9 +24,7 @@ This app is live at https://byobrew.herokuapp.com/.
 
 # API reference
 
-## Login
-
-Used to collect a Token for a User.
+## Collect a Token for a User.
 
 **URL** : `/api/v1/jwt`
 
@@ -66,9 +64,8 @@ Used to collect a Token for a User.
 ```string
 "Missing params: [param]"
 ```
-GET- BREWERIES
 
-## Login
+## GET all breweries
 
 **URL** : `/api/v1/breweries`
 
@@ -129,9 +126,7 @@ No Data constraints.  No Auth required.
 string
 “Sorry, trouble on our end handling your brewery request”.
 
-GET- BEERS
-
-## Login
+## GET all beers
 
 **URL** : `/api/v1/beers`
 
@@ -196,10 +191,7 @@ No Data constraints.  No Auth required.
 string
 “Sorry, trouble on our end handling your Beer request” + “error.message”
 
-
-GET- BEER by beerName
-
-## Login
+## GET beer by beerName
 
 **URL** : `/api/v1/beers/:beerName`
 
@@ -254,10 +246,7 @@ endpoint: “/api/v1/beers/Boise 150”
 string
 “Sorry, trouble on our end handling your beer request” + “error.message”.
 
-
-GET- BREWERIES by breweryName
-
-## Login
+## GET brewery by breweryName
 
 **URL** : `/api/v1/beers/:breweryName`
 
@@ -309,11 +298,9 @@ endpoint: “/api/v1/beers/Boise 150”
 “Sorry, trouble on our end handling your request” + “error.message”.
 ```
 
-GET- BEERS with a rating higher than a given user input
+## GET beers with a rating higher than a given user input
 
-## Login
-
-**URL** : `/api/v1/rating?rating=“*input rating number*”`
+**URL** : `/api/v1/rating?rating=[integer 1-5]`
 
 **Method** : `GET`
 
@@ -357,13 +344,6 @@ endpoint: “/api/v1/rating?=3”
     }]
 ```
 
-
-
-
-
-
-
-
 ## Add a Beer to the Database
 
 **URL** : `/api/v1/beers`
@@ -397,7 +377,8 @@ endpoint: “/api/v1/rating?=3”
     "tasted": "true",
     "rating": "5",
     "availability": "seasonal"
-}```
+}
+```
 
 ### Success Response
 

@@ -208,9 +208,8 @@ No Data constraints.  No Auth required.
 **Code** : `200 OK`
 
 **Content example**
-
+*endpoint: `“/api/v1/beers/Boise 150”`*
 ```json:
-endpoint: “/api/v1/beers/Boise 150”
     [{
         "id": 105,
         "brewery_id": 2,
@@ -262,9 +261,8 @@ No Data constraints.  No Auth required.
 **Code** : `200 OK`
 
 **Content example**
-
+*`endpoint: “/api/v1/beers/Chain Reaction Brewing”`*
 ```json:
-endpoint: “/api/v1/beers/Boise 150”
     [{
         "id": 21,
         "brewery_name": "Chain Reaction Brewing",
@@ -314,9 +312,8 @@ No Data constraints.  No Auth required.
 **Code** : `200 OK`
 
 **Content example**
-
+*endpoint: `“/api/v1/rating?=3”`*
 ```json:
-endpoint: “/api/v1/rating?=3”
    [{
         "id": 2,
         "brewery_id": 4,

@@ -26,9 +26,9 @@ This app is live at https://byobrew.herokuapp.com/.
 
 ## Login
 
-Used to collect a Token for a registered User.
+Used to collect a Token for a User.
 
-**URL** : `/api/jwt`
+**URL** : `/api/v1/jwt`
 
 **Method** : `POST`
 
@@ -67,6 +67,244 @@ Used to collect a Token for a registered User.
 "Missing params: [param]"
 ```
 
+## Add a Beer to the Database
+
+**URL** : `/api/v1/beers`
+
+**Method** : `POST`
+
+**Auth required** : Yes
+
+**Data constraints**
+
+*required params:* "beer_name" and "brewery_name"
+
+```json
+{
+    "beer_name": "[name of beer]",
+    "brewery_name": "[name of brewery]",
+    "style": "[style of beer]",
+    "abv": "[alcohol by volume level]",
+    "tasted": "[true/false]",
+    "rating": "[number between 1 and 5]",
+    "availability": "[seasonal/year-round]"
+}
+```
+**Data Example**
+```json
+{
+    "beer_name": "Dave's Delight",
+    "brewery_name": "Spangalang",
+    "style": "Golden Ale",
+    "abv": "4.5",
+    "tasted": "true",
+    "rating": "5",
+    "availability": "seasonal"
+}```
+
+### Success Response
+
+**Code** : `201 Created`
+
+**Content example**
+*id of addend beer*
+
+```json
+[1448]
+```
+
+### Error Response
+
+**Condition** : If 'beer_name' and/or 'brewery_name' parameters are missing.
+
+**Code** : `422 Unprocessable Entity`
+
+**Content** :
+
+```string
+"Missing params: [param]"
+```
+
+## Add a Brewery to the Database
+
+**URL** : `/api/v1/breweries`
+
+**Method** : `POST`
+
+**Auth required** : Yes
+
+**Data constraints**
+
+*required params:* "brewery_name", "address", "visited", "rating"
+
+```json
+{
+    "brewery_name": "[name of brewery]",
+    "address": "[location]",
+    "visited": "[true/false]",
+    "rating": "[integer between 1 and 5]"
+}
+```
+**Data Example**
+```json
+{
+    "brewery_name": "[Austins Brewhaus]",
+    "address": "123 MyStreet, Denver 80223",
+    "visited": "true",
+    "rating": "5"
+}```
+
+### Success Response
+
+**Code** : `201 Created`
+
+**Content example**
+*id of addend beer*
+
+```json
+"New Brewery "Austin's Brewhaus has been added to the database."
+```
+
+### Error Response
+
+**Condition** : If parameters are missing.
+
+**Code** : `422 Unprocessable Entity`
+
+**Content** :
+
+```string
+"Missing params: [param]"
+```
+
+## Rate a beer
+
+**URL** : `/api/v1/beers`
+
+**Method** : `PATCH`
+
+**Auth required** : Yes
+
+**Data constraints**
+
+*required params:* "beer_name", "rating"
+
+```json
+{
+    "beer_name": "[name of brewery]",
+    "rating": "[integer between 1 and 5]"
+}
+```
+**Data Example**
+```json
+{
+    "beer_name": "Leta's Stout",
+    "rating": "5"
+}```
+
+### Success Response
+
+**Code** : `201 Created`
+
+**Content example**
+
+```json
+"You have set the rating of 'Leta's Stout' to 5."
+```
+
+### Error Response
+
+**Condition** : If parameters are missing.
+
+**Code** : `422 Unprocessable Entity`
+
+**Content** :
+
+```string
+"Missing params: [param]"
+```
+
+## Log a Brewery Vist
+
+**URL** : `/api/v1/breweries`
+
+**Method** : `PATCH`
+
+**Auth required** : Yes
+
+**Data constraints**
+
+*required params:* "brewery_name", "visited"
+
+```json
+{
+    "brewery_name": "[name of brewery]",
+    "visited": "true/false"
+}
+```
+**Data Example**
+```json
+{
+    "brewery_name": "Mile High Brewery",
+    "visited": "true"
+}```
+
+### Success Response
+
+**Code** : `201 Created`
+
+**Content example**
+
+```json
+"You have set the visited property of 'Mile High Brewery' to true."
+```
+
+### Error Response
+
+**Condition** : If parameters are missing.
+
+**Code** : `422 Unprocessable Entity`
+
+**Content** :
+
+```string
+"Missing params: [param]"
+```
+
+## Remove a Brewery from Database
+
+**URL** : `/api/v1/breweries/:breweryName`
+
+**Method** : `DELETE`
+
+**Auth required** : Yes
+
+### Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+"You have successfully Deleted '[breweryName]' from the database."
+```
+
+## Remove a Beer from Database
+
+**URL** : `/api/v1/beers/:beerName`
+
+**Method** : `DELETE`
+
+**Auth required** : Yes
+
+### Success Response
+
+**Code** : `200 OK`
+
+**Content example**
+
+```json
+"You have successfully Deleted '[beerName]' from the database."
 
 
 ## Authors
@@ -81,5 +319,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* this project was built as part of the coursework for Turing School of Software and Design's Front-End Engineering program.
+* This project was built in one week as part of the coursework for Turing School of Software and Design's Front-End Engineering program.
 

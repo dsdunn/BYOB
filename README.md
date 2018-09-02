@@ -61,7 +61,7 @@ This app is live at https://byobrew.herokuapp.com/.
 
 **Content** :
 
-```string
+```
 "Missing params: [param]"
 ```
 
@@ -114,7 +114,7 @@ No Data constraints.  No Auth required.
 
 **Content** :
 
-```string
+```
 “No breweries found”
 ```
 **Condition** : Unable to process user’s request.
@@ -179,7 +179,7 @@ No Data constraints.  No Auth required.
 
 **Content** :
 
-```string
+```
 “No breweries found”
 ```
 **Condition** : Unable to process user’s request.
@@ -188,7 +188,7 @@ No Data constraints.  No Auth required.
 
 **Content** :
 
-string
+
 “Sorry, trouble on our end handling your Beer request” + “error.message”
 
 ## GET beer by beerName
@@ -234,7 +234,7 @@ endpoint: “/api/v1/beers/Boise 150”
 
 **Content** :
 
-```string
+```
 “No breweries found”
 ```
 **Condition** : Unable to process user’s request.
@@ -243,7 +243,6 @@ endpoint: “/api/v1/beers/Boise 150”
 
 **Content** :
 
-string
 “Sorry, trouble on our end handling your beer request” + “error.message”.
 
 ## GET brewery by breweryName
@@ -285,7 +284,7 @@ endpoint: “/api/v1/beers/Boise 150”
 
 **Content** :
 
-```string
+```
 “No breweries found”
 ```
 **Condition** : Unable to process user’s request.
@@ -294,7 +293,7 @@ endpoint: “/api/v1/beers/Boise 150”
 
 **Content** :
 
-```string
+```
 “Sorry, trouble on our end handling your request” + “error.message”.
 ```
 

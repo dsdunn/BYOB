@@ -1,6 +1,12 @@
 # BYOB
 
-This project is a RESTful api serving information about breweries located in Denver and the beers they produce.
+This project is a RESTful api serving information about breweries located in Denver and the beers they produce. It was built in one week as part of the coursework for Turing School of Software and Design's Front-End Engineering program.
+
+## Authors
+
+* **David Starr Dunn** - *Initial work* - [Github](https://github.com/dsdunn)
+* **Austin Wiedenman** - *Initial work* - [Github](https://github.com/Awiedenman)
+
 
 ## Getting Started
 
@@ -582,19 +588,9 @@ No Data constraints.  No Auth required.
 
 ```json
 "You have successfully Deleted '[beerName]' from the database."
-
-
-## Authors
-
-* **David Starr Dunn** - *Initial work* - [Github](https://github.com/dsdunn)
-* **Austin Wiedenman** - *Initial work* - [Github](https://github.com/Awiedenman)
+```
 
 
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* This project was built in one week as part of the coursework for Turing School of Software and Design's Front-End Engineering program.
-

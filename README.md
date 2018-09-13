@@ -4,8 +4,8 @@ This project is a RESTful api serving information about breweries located in Den
 
 ## Authors
 
-* **David Starr Dunn** - *Initial work* - [Github](https://github.com/dsdunn)
-* **Austin Wiedenman** - *Initial work* - [Github](https://github.com/Awiedenman)
+* **David Starr Dunn** - *Initial work* - [@dsdunn](https://github.com/dsdunn)
+* **Austin Wiedenman** - *Initial work* - [@awiedenman](https://github.com/Awiedenman)
 
 
 ## Getting Started

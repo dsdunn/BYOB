@@ -25,7 +25,7 @@ To run tests, run `npm test` in the command line.
 
 ### Deployment
 
-This app is live at https://byobrew.herokuapp.com/.
+This endpoint is live at https://byobrew.herokuapp.com/.
 
 
 # API reference
@@ -506,7 +506,7 @@ No Data constraints.  No Auth required.
 "Missing params: [param]"
 ```
 
-## Log a Brewery Vist
+## Log a Brewery Visit
 
 **URL** : `/api/v1/breweries`
 
